@@ -112,6 +112,36 @@ Therefore, while our results suggest that differences in early game creep score 
 ---
 
 ## Prediction Problem
+### **Problem Statement**
+
+Our objective is to predict the winning outcome for a League of Legends team based on early-game performance metrics. This task falls under the domain of **binary classification** since each game outcome can only be one of two states: a win or a loss for the team in question.
+
+### **Type of Problem**
+
+- **Classification Type:** Binary Classification
+- **Reason:** The outcome we aim to predict is binary, with the only two possible outcomes being "win" or "lose."
+
+### **Response Variable**
+
+- **Response Variable:** `result`
+- **Rationale:** We chose `result` as the response variable because it directly represents the outcome of a game, making it the most straightforward indicator of success (win = 1, lose = 0) for a team based on their performance metrics.
+
+### **Predictors**
+
+The features we are using to predict the game outcome include:
+- `firstblood`: Indicates whether the team achieved the first kill of the game.
+- `csdiffat10`: The difference in creep score between the team and their opponents at the 10-minute mark.
+- `killsat10`: The number of kills achieved by the team by the 10-minute mark.
+- `deathsat10`: The number of times team members were killed by the 10-minute mark.
+- `xpdiffat10`: The difference in experience points between the team and their opponents at 10 minutes.
+
+### **Evaluation Metric**
+
+- **Chosen Metric:** F1-score
+- **Reasoning:** The F1-score is chosen over accuracy because it provides a more balanced measure of a model's performance, especially in scenarios where the data might be imbalanced. The F1-score is the harmonic mean of precision and recall, making it an excellent metric for cases where both false positives and false negatives are crucial to the prediction problem. In competitive games like League of Legends, accurately predicting both wins and losses is equally important, and a model that only performs well in one area (e.g., predicting wins but not losses) may not be very useful. Therefore, the F1-score helps ensure our model is both precise and robust in its predictions.
+
+By focusing on these early-game indicators and evaluating our model with the F1-score, we aim to build a predictive model that not only accurately identifies potential game outcomes but also minimizes the impact of class imbalance and prioritizes both precision and recall in its predictions.
+
 
 ---
 
