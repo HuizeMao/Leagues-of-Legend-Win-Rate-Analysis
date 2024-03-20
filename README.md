@@ -105,7 +105,9 @@ Upon conducting the test with **1,000 iterations** in our permutation loop, we o
 
 ### **Interpreting the Conclusion**
 
-The finding that winning teams tend to have a distinct advantage in creep score by the ten-minute mark underlines the importance of early game strategies and objectives control. While statistical tests cannot prove hypotheses with absolute certainty, our results strongly suggest that achieving a higher creep score early in the game correlates with a higher probability of winning. Teams and players should consider strategies that maximize their early-game CS to improve their chances of victory.
+Our analysis reveals a significant statistical difference in the distribution of `Creep Score at Ten Minutes` between teams that win and those that lose. This indicates that the early game creep score can have an impact on the game's outcome. However, it's important to note that the Kolmogorov-Smirnov test allows us to conclude that there is a difference in the distributions of these scores between winning and losing teams, but it does not specify the nature of the impact or suggest a direct cause-and-effect relationship. 
+
+Therefore, while our results suggest that differences in early game creep score are associated with whether a team wins or loses, they do not imply that higher creep score directly causes a win. Players and teams may view the creep score as one of many indicators of early game success, which could contribute to winning strategies when combined with other factors.
 
 ---
 
