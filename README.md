@@ -1,6 +1,6 @@
-# My Project Title
+# Leagues of Legend Win Rate Analysis
 
-by Suraj Rampure (rampure@ucsd.edu)
+by Huize Mao, Raymond Wang
 
 ***Note***: If you choose a repo name and title as uninspired as the ones here, I will be quite sad.
 
@@ -37,6 +37,25 @@ print(counts[['Quarter', 'Count']].head().to_markdown(index=False))
 ---
 
 ## Hypothesis Testing
+
+---
+
+## Prediction Problem
+
+---
+
+## Baseline Model
+
+---
+
+## Final Model
+
+---
+
+## Fairness Analysis
+
+
+
 
 
 ---
