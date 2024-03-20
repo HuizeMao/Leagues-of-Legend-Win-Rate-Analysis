@@ -51,7 +51,7 @@ This is a two-dimensional box plot that shows the distribution of total kills by
 
 ### Bivariate Analysis 2
 ![My Image](./plots/bivar_scatter_WinRate_DifCS.png "Bivariate Scatter Plot: Win Rate vs CS at Ten Minute")
-Each data point in the graph shows the average win rate of a group of games with similar CS difference scores after 10 minutes. This plot indicates a positive correlation between the difference in CS after 10 minutes and the win rate.
+Each data point in the graph shows the average win rate of a group of games with similar CS difference scores at 10 minutes. This plot indicates a positive correlation between the difference in CS at 10 minutes and the win rate.
 
 ### Interesting Aggregates
 ![My Image](./plots/interesting_aggregates.png "Interesting Aggregates: Team Side + Result, and the average gold, kills, wardkills")
@@ -77,7 +77,35 @@ print(counts[['Quarter', 'Count']].head().to_markdown(index=False))
 
 ---
 
-## Hypothesis Testing
+## Permutation Testing
+### **Null and Alternative Hypotheses**
+
+- **Null Hypothesis (H0):** "The distribution of `Creep Score at Ten Minutes` is the same between winning teams and losing teams."
+- **Alternative Hypothesis (H1):** "The distribution of `Creep Score at Ten Minutes` is different between winning teams and losing teams."
+
+### **Choice of Test Statistic and Significance Level**
+
+- **Test Statistic:** We selected the **Kolmogorov-Smirnov (KS) test statistic** because it effectively compares the distributions between two samples. This choice is apt for our hypothesis, which concerns the distribution of CS differences between winning and losing teams.
+- **Significance Level (α):** A threshold of **0.05** was chosen to determine statistical significance. This level is widely accepted for balancing Type I and Type II error rates in hypothesis testing.
+
+### **Justification for Our Approach**
+
+The KS test is an excellent choice for our analysis due to its non-parametric nature, allowing us to compare distributions without assuming a specific distribution shape. Moreover, employing a permutation test enhances the robustness of our findings. This method does not rely on assumptions about the distribution of the test statistic under the null hypothesis, thereby providing a strong foundation for our conclusion.
+
+### **Visualization of Hypothesis Test**
+
+![My Image](./plots/Permutation_test_res_cs.png "Permutation Test for CS Difference at 10 Minutes")
+
+
+*This histogram shows the distribution of KS statistics obtained from permuted samples alongside our observed statistic, marked in red. The extreme nature of our observed statistic compared to the permutations underscores the significant difference in creep score distributions between winning and losing teams.*
+
+### **Results and Conclusion**
+
+Upon conducting the test with **1,000 iterations** in our permutation loop, we observed a resulting **p-value of 0.0**. This exceptionally low p-value leads us to **reject the null hypothesis**. It indicates a statistically significant difference in the distribution of `Creep Score at Ten Minutes` between teams that win and those that lose. In the context of League of Legends, this suggests that the early game advantage, as measured by creep score differences at the ten-minute mark, could be a strong indicator of a team's likelihood of winning the match.
+
+### **Interpreting the Conclusion**
+
+The finding that winning teams tend to have a distinct advantage in creep score by the ten-minute mark underlines the importance of early game strategies and objectives control. While statistical tests cannot prove hypotheses with absolute certainty, our results strongly suggest that achieving a higher creep score early in the game correlates with a higher probability of winning. Teams and players should consider strategies that maximize their early-game CS to improve their chances of victory.
 
 ---
 
