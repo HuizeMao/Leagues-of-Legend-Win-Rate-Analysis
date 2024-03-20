@@ -1,6 +1,6 @@
 # Leagues of Legend Win Rate Analysis
 
-by Huize Mao, Raymond Wang
+by Raymond Wang, Huize Mao
 
 ***Note***: If you choose a repo name and title as uninspired as the ones here, I will be quite sad.
 
@@ -15,6 +15,13 @@ In this project, we studied the effectiveness of spice challenges in building te
 ## Cleaning and EDA
 
 <iframe src="assets/10-80-enrollment.html" width=800 height=600 frameBorder=0></iframe>
+
+# Data Cleaning
+
+# Univariate Analysis
+
+![My Image](./plots/univar_hist_gold.png "Univariate Plot: Distribution of Gold per Game")
+
 
 ---
 
