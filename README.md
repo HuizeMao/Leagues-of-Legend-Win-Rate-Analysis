@@ -5,8 +5,24 @@ by Raymond Wang, Huize Mao
 ---
 
 ## Introduction
+League of Legends (LoL, or the League) is a multiplayer online battle arena (MOBA) game. In this project, we delve into a dataset derived from competitive League of Legends matches from 2014 to 2023, exploring factors that might influence the win rate of teams. Throughout our research, we aim to answer the question "What are some key factors that influence the outcome of the game?" Because of this question, we will explore various features (e.g., heroes killed, Creep Score (CS), economy, etc.) outlined below, both in a holistic view (i.e., the entire duration of the game) and in a partial view (i.e., the first ten minutes of the game). By answering our question, this project is particularly interesting for League fans who would like to understand the win rate of their favorite or supporting teams using the stats available from a game.
 
-In this project, we studied the effectiveness of spice challenges in building team morale.
+From the raw data, there are around 70,000 games, and for each game, there are 12 rows, 10 for each of the players from different positions (e.g., jungle, mage, top, etc.), and 2 for the result of each side. There are 131 columns in the dataset, including the winning side or the dragon type from the game. Relevant columns are described below.
+
+### Descriptions of Key Columns
+- `date`: Represents the date on which the game was played, following a format like 'YYYY-MM-DD'.
+- `gamelength`: Indicates the duration of the game measured in seconds.
+- `result`: Represents the outcome of the game for the team. `1` if the team won and `0` if the team lost.
+- `firstblood`: Indicates whether the team achieved the first kill of the game. `1.0` if the team did and `0.0` if the team did not.
+- `csdiffat10`: Stands for the difference in creep score (CS) between the team and the Red team by the 10-minute mark of the game. A positive `csdiffat10` means the team has a higher creep score than the Red team.
+- `killsat10`: Represents the number of kills the team achieved by the 10-minute mark of the game.
+- `deathsat10`: Indicates the number of times members of the team were killed by the 10-minute mark of the game.
+- `xpdiffat10`: Represents the difference in experience points (XP) between the team and the Red team at 10 minutes into the game.
+- `totalgold`: Represents the total amount of gold earned by the team throughout the game.
+- `damagetochampions`: Indicates the total amount of damage dealt to enemy champions by the team.
+- `wardskilled`: Represents the number of vision wards (or simply "wards") destroyed by the team.
+
+Each of these features plays a crucial role in analyzing and understanding the dynamics and outcomes of League of Legends games.
 
 ---
 
@@ -40,6 +56,7 @@ Each data point in the graph shows the average win rate of a group of games with
 ### Interesting Aggregates
 ![My Image](./plots/interesting_aggregates.png "Interesting Aggregates: Team Side + Result, and the average gold, kills, wardkills")
 The table above pivots "team side" (i.e., red, blue) with "winning results," and aggregates the average stats for "Damage to Heroes", "Team Kill", "Total Gold", and "Wards Killed." The table indicates that winning teams have higher average stats, regardless of the sides they were in. It also indicates that if teams lose, they tend to have better stats when they are on the blue side. In contrast, when teams win, they tend to have better stats on the red side. In general, if a team is on the blue's side, there's less of a discrepancy between their stats between losing and winning, and if a team is on the red's side, there's more of a discrepancy in stats between winning and losing. This indicates that red is a more creative and unstable side to play on, and blue is a more stable and reserved side to play on.
+
 ---
 
 ## Assessment of Missingness
