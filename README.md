@@ -13,14 +13,18 @@ In this project, we studied the effectiveness of spice challenges in building te
 ---
 
 ## Cleaning and EDA
+### Data Cleaning
 
-<iframe src="assets/10-80-enrollment.html" width=800 height=600 frameBorder=0></iframe>
+### Univariate Analysis
+![My Image](./plots/univar_hist_gold.png "Univariate Histogram Plot: Distribution of Gold per Game")
+This histogram plot shows the frequency of total gold each team makes in all games. The plot has a peak around 51000 and has a longer tail on the right so it’s right-skewed, meaning in some games a team makes significantly more gold than the others possibly indicating their dominance in the game.
 
-# Data Cleaning
+### Bivariate Analysis 1
+![My Image](./plots/bivar_scatter_WinRate_DifCS.png "Bivariate Scatter Plot: Win Rate vs CS at Ten Minute")
 
-# Univariate Analysis
 
-![My Image](./plots/univar_hist_gold.png "Univariate Plot: Distribution of Gold per Game")
+### Bivariate Analysis 2
+
 
 
 ---
