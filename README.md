@@ -21,6 +21,7 @@ From the raw data, there are around 70,000 games, and for each game, there are 1
 - `totalgold`: Represents the total amount of gold earned by the team throughout the game.
 - `damagetochampions`: Indicates the total amount of damage dealt to enemy champions by the team.
 - `wardskilled`: Represents the number of vision wards (or simply "wards") destroyed by the team.
+- `league`: Represents the league that the game took place, indicative of country or level.
 
 Each of these features plays a crucial role in analyzing and understanding the dynamics and outcomes of League of Legends games.
 
@@ -43,18 +44,22 @@ The top few rows are displayed below:
 
 ### Univariate Analysis
 ![My Image](./plots/univar_hist_gold.png "Univariate Histogram Plot: Distribution of Gold per Game")
+
 This histogram plot shows the frequency of total gold each team makes in all games. The plot has a peak around 51000 and has a longer tail on the right so it’s right-skewed, meaning in some games a team makes significantly more gold than the others possibly indicating their dominance in the game.
 
 ### Bivariate Analysis 1
 ![My Image](./plots/bivar_box_res_kill.png "Bivariate Scatter Plot: Number of Kills when Winning vs Losing")
+
 This is a two-dimensional box plot that shows the distribution of total kills by teams in all games when they lose versus when they win. When teams win, they tend to have higher median, lower, and upper quartile as well as higher upper range in number of kills. 
 
 ### Bivariate Analysis 2
 ![My Image](./plots/bivar_scatter_WinRate_DifCS.png "Bivariate Scatter Plot: Win Rate vs CS at Ten Minute")
+
 Each data point in the graph shows the average win rate of a group of games with similar CS difference scores at 10 minutes. This plot indicates a positive correlation between the difference in CS at 10 minutes and the win rate.
 
 ### Interesting Aggregates
 ![My Image](./plots/interesting_aggregates.png "Interesting Aggregates: Team Side + Result, and the average gold, kills, wardkills")
+
 The table above pivots "team side" (i.e., red, blue) with "winning results," and aggregates the average stats for "Damage to Heroes", "Team Kill", "Total Gold", and "Wards Killed." The table indicates that winning teams have higher average stats, regardless of the sides they were in. It also indicates that if teams lose, they tend to have better stats when they are on the blue side. In contrast, when teams win, they tend to have better stats on the red side. In general, if a team is on the blue's side, there's less of a discrepancy between their stats between losing and winning, and if a team is on the red's side, there's more of a discrepancy in stats between winning and losing. This indicates that red is a more creative and unstable side to play on, and blue is a more stable and reserved side to play on.
 
 ---
@@ -67,7 +72,7 @@ The rationale for classifying this missingness as NMAR stems from the nature of 
 ## Assessment of Missingness
 In this section we tested the dependcy of missingness in `csdiffat10` on `league` and `result`
 
-### Investigating the Dependency of `csdiffat10` on `League`
+### Investigating the Dependency of `csdiffat10` on `league`
 We explored whether the missingness of data in the column `csdiffat10` depends on the `league` in which the match is played. Our hypothesis was that the collection of information, including the creep score difference at 10 minutes (`csdiffat10`), might vary by league, affecting the presence of this data.
 
 ### Distribution of Leagues with and without `csdiffat10` Data
@@ -141,6 +146,7 @@ We conducted an analysis to determine whether the missingness of the `csdiffat10
 
 ### Observed Distribution of Game Outcomes with and without `csdiffat10` Data
 The table below presents the observed distribution of game outcomes for matches with and without `csdiffat10` data:
+
 | Outcome   | csdiffat10 is not missing | csdiffat10 is missing |
 |-----------|---------------------------|-----------------------|
 | Red Win   | 0.468648                  | 0.464148              |
