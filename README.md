@@ -240,9 +240,68 @@ By focusing on these early-game indicators and evaluating our model with the F1-
 
 ## Baseline Model
 
+In our project, we aim to predict the outcome of League of Legends matches (win or lose) based on early game performance indicators. For this purpose, we employed a RandomForestClassifier from Scikit-learn. This choice was motivated by the RandomForest's robustness and its suitability for handling binary classification tasks effectively.
+
+### Features Used in the Baseline Model
+
+- `firstblood`: A nominal (boolean) feature indicating whether the team achieved the first kill of the game, represented as 1 (yes) or 0 (no).
+- `csdiffat10`: A quantitative feature that represents the difference in creep score between the team and its opponent at the 10-minute mark of the game.
+
+**Feature Types and Encoding:**
+- **Quantitative Features:** 1 (`csdiffat10`). The `firstblood` feature, being boolean, was directly utilized in our RandomForestClassifier without the need for additional encoding. This binary representation perfectly suits nominal features in classification models.
+- **Nominal (Boolean) Features:** 1 (`firstblood`) The `csdiffat10` feature was used as is, given its quantitative nature, allowing the RandomForest algorithm to interpret and leverage this continuous variable for prediction.
+
+**Feature Types:**
+- **Quantitative Features:** 1 (`csdiffat10`)
+- **Ordinal Features:** 0
+- **Nominal (Boolean) Features:** 1 (`firstblood`)
+
+### Model Performance
+
+The performance of our RandomForest model was rigorously evaluated using the F1-score to assess its precision and recall balance. The model achieved an **F1-score of 0.6868**. To provide a holistic view of the model's performance, we also considered its accuracy:
+
+### Assessment of Model Quality
+
+Given the F1-score of 0.6841, we consider our model to be okay for initial predictions but see room for improvement. The model's balance between precision and recall, as reflected in the F1-score, suggests it can reasonably predict match outcomes. However, enhancing model accuracy and the F1-score could yield more reliable predictions. 
+
+The RandomForestClassifier's strength lies in its ability to handle the dataset's complexities, including the nominal boolean feature `firstblood` and the quantitative `csdiffat10`. However, improvements might be attained through feature engineering, hyperparameter tuning, or exploring alternative models.
+
 ---
 
 ## Final Model
+
+For the final model, we've introduced and engineered several features aiming to capture the complexities of early-game dynamics:
+
+### New Features Added in the Model
+- **KDA at 10 Minutes (`kdaat10`):** We calculated a new feature representing the Kill-Death-Assist ratio at the 10-minute mark, which provides a comprehensive view of a player's early performance. This ratio is crucial as early game advantages often translate to higher chances of winning. The formula adjusts for zero deaths to avoid division by zero errors.
+- **Polynomial Features:** We applied polynomial transformations to `csdiffat10` (Creep Score Difference at 10 Minutes) and `xpdiffat10` (Experience Point Difference at 10 Minutes). This allows our model to consider not only the linear impact of these differences but also their higher-order interactions, capturing the non-linear ways they might affect match outcomes.
+- **Date Extraction (`year_month`):** Recognizing the evolving nature of game strategies and patches over time, we extracted the year and month from the match date. This temporal information helps our model understand performance in the context of specific game versions, which is vital as early-game strategies effectiveness can change significantly with each game update.
+
+### Modeling Algorithm and Hyperparameters
+
+Our choice of modeling algorithm is the **RandomForestClassifier**. This ensemble method is known for its robustness and ability to handle complex, non-linear relationships between features without extensive hyperparameter tuning. For our final model, the RandomForest performed best with the following hyperparameters:
+- `n_estimators`: The number of trees in the forest. A higher number increases the model's ability to capture various aspects of the data but also increases computational cost.
+- `max_depth`: Controls the depth of each tree. Deeper trees can capture more detailed information but risk overfitting.
+
+- **Best Parameters Found:** 
+  - `max_depth`: 10
+  - `n_estimators`: 200
+
+This configuration was determined after fitting **5 folds for each of 6 candidates, totaling 30 fits** during the grid search process.
+The selection of hyperparameters was conducted through a grid search, balancing the trade-offs between model complexity and generalization ability. This systematic approach ensured that we identified a configuration that offers the best performance on our validation set.
+
+- **Best F1-score from Grid Search:** 0.7180181001263564
+- **F1-score on Test Data:** 0.7188892537173414
+
+### Final Model Performance vs. Baseline Model
+These F1-scores indicate a significant improvement in the model's ability to predict match outcomes accurately, striking a balance between precision and recall. This improvement over the baseline model is indicative of the effectiveness of our feature engineering efforts and hyperparameter tuning.
+
+
+The introduction of engineered features and the optimization of RandomForest hyperparameters have led to a noticeable improvement in our model's predictive performance. Our final model achieved an **F1-score of 0.718**, a 3% improvement from the baseline model. The metric chosen for its balance between precision and recall, particularly important in the context of our imbalanced dataset.
+
+### Conclusion
+
+Our enhanced model, through the incorporation of meaningful features and the strategic use of RandomForestClassifier, demonstrates a significant step forward in predicting the outcomes of League of Legends matches. By closely aligning our feature engineering with the nuances of the game's early dynamics and employing a robust classification algorithm, we've developed a predictive framework that offers insightful forecasts of match results, paving the way for deeper analyses and applications in strategic game planning.
 
 ---
 
