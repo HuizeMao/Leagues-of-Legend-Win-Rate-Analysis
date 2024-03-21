@@ -59,21 +59,108 @@ The table above pivots "team side" (i.e., red, blue) with "winning results," and
 
 ---
 
+## NMAR Analysis
+In our dataset, we've identified that the missingness of data within the columns `Ban1`, `Ban2`, and `Ban3` appears to be Not Missing At Random (NMAR). These columns represent the champions banned by each side in a League of Legends match. In certain cases, teams may strategically choose not to ban a champion. This decision, intended to provide more flexibility and conceal strategic intentions, results in missing values in these ban columns.
+
+The rationale for classifying this missingness as NMAR stems from the nature of the decision-making process behind champion bans. Unlike random omissions or missingness that correlates with observable variables, the absence of bans is a deliberate choice made by teams. This choice is not readily apparent or inferable from other data within the dataset, making it a clear case of NMAR. The dataset does not contain explicit indicators for intentional non-bans, nor can the reasoning for such decisions be deduced from other available columns.
+
 ## Assessment of Missingness
+In this section we tested the dependcy of missingness in `csdiffat10` on `league` and `result`
 
-Here's what a Markdown table looks like. Note that the code for this table was generated _automatically_ from a DataFrame, using
+### Investigating the Dependency of `csdiffat10` on `League`
+We explored whether the missingness of data in the column `csdiffat10` depends on the `league` in which the match is played. Our hypothesis was that the collection of information, including the creep score difference at 10 minutes (`csdiffat10`), might vary by league, affecting the presence of this data.
 
-```py
-print(counts[['Quarter', 'Count']].head().to_markdown(index=False))
-```
+### Distribution of Leagues with and without `csdiffat10` Data
+Below is the distribution of leagues for matches with and without `csdiffat10` data:
 
-| Quarter     |   Count |
-|:------------|--------:|
-| Fall 2020   |       3 |
-| Winter 2021 |       2 |
-| Spring 2021 |       6 |
-| Summer 2021 |       4 |
-| Fall 2021   |      55 |
+| League | csdiffat10 is not missing | csdiffat10 is missing |
+|--------|---------------------------|-----------------------|
+| AL     | 0.002694                  | 0.000000              |
+| AOL    | 0.000576                  | 0.000000              |
+| BIG    | 0.005263                  | 0.000000              |
+| BL     | 0.003021                  | 0.000000              |
+| BM     | 0.003737                  | 0.000000              |
+| BRCC   | 0.006571                  | 0.000000              |
+| CBLOL  | 0.025427                  | 0.000000              |
+| CBLOLA | 0.010666                  | 0.000000              |
+| CDF    | 0.002118                  | 0.000000              |
+| CISC   | 0.001650                  | 0.000000              |
+| CK     | 0.021659                  | 0.000000              |
+| CLS    | 0.009015                  | 0.000000              |
+| CT     | 0.002382                  | 0.000000              |
+| CU     | 0.003208                  | 0.000000              |
+| DCup   | 0.002585                  | 0.049632              |
+| DDH    | 0.012861                  | 0.000000              |
+| DL     | 0.003052                  | 0.000000              |
+| EBL    | 0.011616                  | 0.000000              |
+| EGL    | 0.001433                  | 0.000000              |
+| EL     | 0.002709                  | 0.000000              |
+| EM     | 0.004204                  | 0.000000              |
+| EPL    | 0.001339                  | 0.000000              |
+| ESLOL  | 0.008377                  | 0.000000              |
+| EU CS  | 0.007879                  | 0.000000              |
+| EU LCS | 0.024197                  | 0.000000              |
+| EUM    | 0.014605                  | 0.000000              |
+| GL     | 0.004189                  | 0.000000              |
+| GLL    | 0.015213                  | 0.000000              |
+| GPL    | 0.002133                  | 0.000000              |
+| GSG    | 0.000825                  | 0.000000              |
+| HC     | 0.008657                  | 0.000000              |
+| HM     | 0.011538                  | 0.000000              |
+| HS     | 0.001230                  | 0.000000              |
+| IC     | 0.002055                  | 0.000000              |
+| IEM    | 0.002164                  | 0.000000              |
+| IWCI   | 0.000607                  | 0.000000              |
+| KeSPA  | 0.003830                  | 0.000000              |
+| LAS    | 0.012348                  | 0.000000              |
+| LCK    | 0.061224                  | 0.000125              |
+| LCKC   | 0.014107                  | 0.000000              |
+| LCL    | 0.013733                  | 0.000000              |
+| LCO    | 0.008206                  | 0.000000              |
+| LCS    | 0.022811                  | 0.000000              |
+| LCSA   | 0.024898                  | 0.000125              |
+| LDL    | 0.042290                  | 0.471131              |
+| LEC    | 0.020195                  | 0.000249              |
+| LFL    | 0.016380                  | 0.000000              |
+| LFL2   | 0.007988                  | 0.000000              |
+| LGL    | 0.000125                  | 0.000000              |
+| LHE    | 0.015197                  | 0.000000              |
+| LJL    | 0.022095                  | 0.000000              |
+| LJLA   | 0.002569                  | 0.000000              |
+
+### Statistical Analysis Results Using Total Variation Distance (TVD) as Test Statistic
+- **Observed Statistic:** 0.9127832903634927
+- **P-value:** 0.0
+
+![My Image](./plots/missingness_1_cs_league.png "Missingness of CS Difference at 10 Minutes on League")
+
+The p-value of 0 indicates a negligible likelihood that the observed difference in the distribution of leagues, between matches with and without `csdiffat10` data, could occur by chance. This suggests that the missingness of `csdiffat10` is indeed dependent on the league, supporting our hypothesis that different leagues may have distinct practices for data collection, leading to Missing at Random (MAR) characteristics for this variable.
+
+### Analysis of Missingness Dependency on Game Result
+We conducted an analysis to determine whether the missingness of the `csdiffat10` data is dependent on the game's outcome. Our goal was to ascertain if the absence of creep score difference data at the 10-minute mark (`csdiffat10`) was influenced by whether the blue team wins or loses the game.
+
+### Observed Distribution of Game Outcomes with and without `csdiffat10` Data
+The table below presents the observed distribution of game outcomes for matches with and without `csdiffat10` data:
+| Outcome   | csdiffat10 is not missing | csdiffat10 is missing |
+|-----------|---------------------------|-----------------------|
+| Red Win   | 0.468648                  | 0.464148              |
+| Blue Win  | 0.531352                  | 0.535852              |
+
+### Statistical Analysis Results Using Total Variation Distance (TVD) as Test Statistic
+- **Observed Statistic (TVD):** 0.004500654234423335
+- **P-value:** 0.432
+
+![My Image](./plots/missingness_2_cs_side.png "Missingnes of CS Difference at 10 Minutes on sides that won")
+
+
+Using the Total Variation Distance (TVD) as our test statistic, we found an observed statistic of 0.0045, with a p-value of 0.432. This high p-value indicates a 43% probability that any observed differences in the distribution of game outcomes (win/loss) between matches with and without `csdiffat10` data could occur by chance.
+
+### Conclusion and Interpretation
+
+Given the p-value of 0.432, we conclude that the missingness of `csdiffat10` is not dependent on the game's result. This finding suggests that whether the team wins or loses does not influence the collection or reporting of the creep score difference at the 10-minute mark. The use of TVD as a test statistic provided a nuanced measure of the discrepancy in distributions between our groups of interest, supporting a robust analysis of missingness dependency.
+
+### Conclusion and Implications
+This analysis confirms that the presence of detailed match data, such as the creep score difference at the 10-minute mark (`csdiffat10`), is not uniformly distributed across all leagues. Instead, it varies significantly, likely reflecting league-specific data collection policies or practices.
 
 ---
 
