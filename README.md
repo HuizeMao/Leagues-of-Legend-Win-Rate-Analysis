@@ -297,7 +297,7 @@ The selection of hyperparameters was conducted through a grid search, balancing 
 These F1-scores indicate a significant improvement in the model's ability to predict match outcomes accurately, striking a balance between precision and recall. This improvement over the baseline model is indicative of the effectiveness of our feature engineering efforts and hyperparameter tuning.
 
 
-The introduction of engineered features and the optimization of RandomForest hyperparameters have led to a noticeable improvement in our model's predictive performance. Our final model achieved an **F1-score of 0.718**, a 3% improvement from the baseline model. The metric chosen for its balance between precision and recall, particularly important in the context of our imbalanced dataset.
+The introduction of engineered features and the optimization of RandomForest hyperparameters have led to a noticeable improvement in our model's predictive performance. Our final model achieved an **F1-score of 0.718**, a **3%** improvement from the baseline model. The metric chosen for its balance between precision and recall, particularly important in the context of our imbalanced dataset.
 
 ### Conclusion
 
@@ -307,8 +307,43 @@ Our enhanced model, through the incorporation of meaningful features and the str
 
 ## Fairness Analysis
 
+### Overview: Model Performance Across Different Game Sets
+
+In assessing the fairness of our predictive model, we focus on comparing its performance across different game sets. Specifically, we examine whether the model's performance on Game Set 1 is statistically equivalent to its performance on Game Sets 2, 3, 4, and 5 combined.
+
+### Group Definition
+
+- **Group X (Control Group):** Game Set 1, which constitutes 63% of our dataset.
+- **Group Y (Treatment Groups):** The combined sets of Game Set 2, Game Set 3, Game Set 4, and Game Set 5, making up the remaining 37% of our dataset.
+
+### Evaluation Metric
+
+Our primary evaluation metric for model performance is the F1-score, chosen for its balance between precision and recall, which is critical in our binary classification task.
+
+### Hypotheses
+
+- **Null Hypothesis (H0):** The mean F1-score performance of the model on Game Set 1 is the same as its performance on Game Sets 2, 3, 4, and 5 combined.
+- **Alternative Hypothesis (H1):** There is a significant difference in the mean F1-score performance of the model between Game Set 1 and the combined Game Sets 2, 3, 4, and 5.
+
+### Test Statistic and Significance Level
+
+- **Test Statistic:** The difference in mean F1-score performance between Group X and Group Y.
+- **Significance Level (α):** 0.05, a standard threshold for determining statistical significance.
+
+### Results and Conclusion
+
+- **Resulting p-value:** 0.352
+- Given the observed p-value of 0.352, we fail to reject the null hypothesis. This suggests that there is no statistically significant difference in the model's performance between Game Set 1 and the combined Game Sets 2, 3, 4, and 5, indicating fairness in model performance across the different game sets.
 
 
+### Visualization of Permutation Test
 
+![My Image](./plots/fairness_perm_test.png "Permutation test for fairness across gamesets")
+
+![My Image](./plots/fairness_false_neg.png "False Negative Rates Across Gamesets")
+
+### Reflection
+
+The fairness analysis, indicated by a p-value of 0.352, suggests that the performance differences across game sets are not statistically significant, implying fairness in model performance. This finding is critical, given Game Set 1's dominance in the dataset (63%) versus the combined remainder (37%). Future analyses could delve into more detailed comparisons within each game set or consider alternative metrics and definitions of fairness to further validate these findings.
 
 ---
