@@ -333,8 +333,8 @@ Our primary evaluation metric for model performance is the F1-score, chosen for 
 
 ### Results and Conclusion
 
-- **Resulting p-value:** 0.352
-- Given the observed p-value of 0.352, we fail to reject the null hypothesis. This suggests that there is no statistically significant difference in the model's performance between Game Set 1 and the combined Game Sets 2, 3, 4, and 5, indicating fairness in model performance across the different game sets.
+- **Resulting p-value:** 0.016
+- Given the observed p-value of 0.016, we reject the null hypothesis. This suggests that there is a statistically significant difference in the model's performance between Game Set 1 and the combined Game Sets 2, 3, 4, and 5. This finding challenges the initial assumption of fairness in model performance across the different game sets.
 
 
 ### Visualization of Permutation Test
@@ -345,6 +345,6 @@ Our primary evaluation metric for model performance is the F1-score, chosen for 
 
 ### Reflection
 
-The fairness analysis, indicated by a p-value of 0.352, suggests that the performance differences across game sets are not statistically significant, implying fairness in model performance. This finding is critical, given Game Set 1's dominance in the dataset (63%) versus the combined remainder (37%). Future analyses could delve into more detailed comparisons within each game set or consider alternative metrics and definitions of fairness to further validate these findings.
+The fairness analysis, indicated by a p-value of 0.016, reveals statistically significant performance differences across game sets, with Game Set 1 showing distinct results from the other sets. This outcome underscores the importance of scrutinizing model fairness, especially given the disproportional distribution of data (63% in Game Set 1 vs. 37% in others). The significance of these findings motivates further investigation into potential biases or factors contributing to the observed disparities. Future work may explore more nuanced analyses within each game set, incorporate additional performance metrics, or apply other fairness definitions to deepen our understanding and ensure equitable model performance.
 
 ---
