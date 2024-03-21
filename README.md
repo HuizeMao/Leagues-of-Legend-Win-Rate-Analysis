@@ -28,18 +28,18 @@ Each of these features plays a crucial role in analyzing and understanding the d
 ---
 
 ## Cleaning and EDA
+
+Note: The data is obtained on the website [Oracle’s Elixir](https://oracleselixir.com/tools/downloads) at the provided Google Drive link.
+
 ### Data Cleaning
-When cleaning data, we choose to clean the data in two separate ways: one where we analyze the game as a whole (data cleaning 1) and one where we focus on the early game (data cleaning 2). 
+When cleaning data, we choose to retain columns so we can capture two aspects to the game: one where we analyze the game as a whole (data cleaning 1) and one where we focus on the early game (data cleaning 2). 
 
-### Data Cleaning 1
-The result of the first data cleaning gives a holistic view of the entire game (whole duration). In the first data-cleaning process, we prepared different metrics for analysis. We selected relevant columns, including game ID, date, side, position, game length, result, total gold, damage to champions, wards killed, and team kills. We filtered the data to retain only team-level information by ensuring the 'position' column value was 'team.' We converted the 'date' column to a DateTime format for better time-based analyses. We then set the game ID as the index of the DataFrame to facilitate easier data manipulation in subsequent analysis. This cleaned dataset is now ready for exploratory data analysis, where we will investigate the relationships between various game metrics, such as total gold, damage dealt to champions, ward control, and team kills, and their impact on the game's outcome. 
+Data Cleaning Aspect 1: The result of the data cleaning gives a holistic view of the entire game (whole duration) as well as information of the game at 10 minutes. In the data-cleaning process, we prepared different metrics for analysis. We selected relevant columns, including game ID, position, league, date, side, game length, result, firstblood, total gold, damage to champions, wards killed, and team kills. We filtered the data to retain only team-level information by ensuring the ‘position’ column value was ‘team.’ We converted the ‘date’ column to a DateTime format for better time-based analyses. We then set the game ID as the index of the DataFrame to facilitate easier data manipulation in subsequent analysis. Then we drop the ‘position’ column as it is not longer needed. This cleaned dataset is now ready for exploratory data analysis, where we will investigate the relationships between various game metrics, such as total gold, damage dealt to champions, ward control, and team kills, and their impact on the game’s outcome. 
 The top few rows are displayed below:
+Data Cleaning Aspect 2: The result of the second data cleaning gives a partial view of the game (first ten minutes), and this will help us understand how early game advantages or disadvantages lead to the final result. The second dataset has fewer columns: we dropped unnecessary columns and set the game ID as the index for easier manipulation. The second data cleaning process involved selecting relevant columns such as game ID, date, side, position, game length, result, first blood, experience points at 10 minutes (xpat10), CS difference at 10 minutes, kills at 10 minutes, and deaths at 10 minutes. We filtered the data to include only team-level information and games with a positive length. Additionally, we calculated the experience point difference at 10 minutes (xpdiffat10) between the Blue and Red teams by grouping the data by game ID and subtracting the Red team's experience points from the Blue team's. Then we dropped all the red side information as it is a mirrored version of the blue side. In the exploratory data analysis phase, we aimed to uncover patterns and insights from the cleaned dataset, such as the impact of first blood on game results, the relationship between experience point differences and game outcomes, and the correlation between early-game metrics like kills, deaths, and CS difference at 10 minutes with the overall game result. 
+
+Combining the two aspects, we retain our dataset. The top few rows are displayed below:
 ![My Image](./plots/data_cleaning_1.png "Data Cleaning 1: Entire Duration Game Stats")
-
-### Data Cleaning 2
-The result of the second data cleaning gives a partial view of the game (first ten minutes), and this will help us understand how early game advantages or disadvantages lead to the final result. The second dataset has fewer columns: we dropped unnecessary columns and set the game ID as the index for easier manipulation. The second data cleaning process involved selecting relevant columns such as game ID, date, side, position, game length, result, first blood, experience points at 10 minutes (xpat10), CS difference at 10 minutes, kills at 10 minutes, and deaths at 10 minutes. We filtered the data to include only team-level information and games with a positive length. Additionally, we calculated the experience point difference at 10 minutes (xpdiffat10) between the Blue and Red teams by grouping the data by game ID and subtracting the Red team's experience points from the Blue team's. Then we dropped all the red side information as it is a mirrored version of the blue side. In the exploratory data analysis phase, we aimed to uncover patterns and insights from the cleaned dataset, such as the impact of first blood on game results, the relationship between experience point differences and game outcomes, and the correlation between early-game metrics like kills, deaths, and CS difference at 10 minutes with the overall game result. 
-The top few rows are displayed below:
-![My Image](./plots/data_cleaning_2.png "Data Cleaning 2: First Ten Min Game Stats")
 
 
 ### Univariate Analysis
@@ -50,7 +50,7 @@ This histogram plot shows the frequency of total gold each team makes in all gam
 ### Bivariate Analysis 1
 ![My Image](./plots/bivar_box_res_kill.png "Bivariate Scatter Plot: Number of Kills when Winning vs Losing")
 
-This is a two-dimensional box plot that shows the distribution of total kills by teams in all games when they lose versus when they win. When teams win, they tend to have higher median, lower, and upper quartile as well as higher upper range in number of kills. 
+This is a two-dimensional box plot that shows the distribution of total kills by teams in all games when they lose versus when they win. When teams win, they tend to have greater "median, lower, and upper quartile" as well as greater "upper range" in number of kills. 
 
 ### Bivariate Analysis 2
 ![My Image](./plots/bivar_scatter_WinRate_DifCS.png "Bivariate Scatter Plot: Win Rate vs CS at Ten Minute")
@@ -165,8 +165,8 @@ Using the Total Variation Distance (TVD) as our test statistic, we found an obse
 
 Given the p-value of 0.432, we conclude that the missingness of `csdiffat10` is not dependent on the game's result. This finding suggests that whether the team wins or loses does not influence the collection or reporting of the creep score difference at the 10-minute mark. The use of TVD as a test statistic provided a nuanced measure of the discrepancy in distributions between our groups of interest, supporting a robust analysis of missingness dependency.
 
-### Conclusion and Implications
-This analysis confirms that the presence of detailed match data, such as the creep score difference at the 10-minute mark (`csdiffat10`), is not uniformly distributed across all leagues. Instead, it varies significantly, likely reflecting league-specific data collection policies or practices.
+### Section (missingness) Conclusion
+This analysis supports that the presence of detailed match data about "the creep score difference at the 10-minute mark" (`csdiffat10`), is dependent on the league that the match takes place, and is not dependent on the game result on that match.
 
 ---
 
@@ -227,13 +227,14 @@ The features we are using to predict the game outcome include:
 - `killsat10`: The number of kills achieved by the team by the 10-minute mark.
 - `deathsat10`: The number of times team members were killed by the 10-minute mark.
 - `xpdiffat10`: The difference in experience points between the team and their opponents at 10 minutes.
+- `data`: The time in which the match took place.
 
 ### **Evaluation Metric**
 
 - **Chosen Metric:** F1-score
 - **Reasoning:** The F1-score is chosen over accuracy because it provides a more balanced measure of a model's performance, especially in scenarios where the data might be imbalanced. The F1-score is the harmonic mean of precision and recall, making it an excellent metric for cases where both false positives and false negatives are crucial to the prediction problem. In competitive games like League of Legends, accurately predicting both wins and losses is equally important, and a model that only performs well in one area (e.g., predicting wins but not losses) may not be very useful. Therefore, the F1-score helps ensure our model is both precise and robust in its predictions.
 
-By focusing on these early-game indicators and evaluating our model with the F1-score, we aim to build a predictive model that not only accurately identifies potential game outcomes but also minimizes the impact of class imbalance and prioritizes both precision and recall in its predictions.
+By focusing on these early-game indicators and evaluating our model with the F1-score, we aim to build a predictive model that not only accurately identifies potential game outcomes but also minimizes the impact of class imbalance and prioritizes both precision and recall in its predictions. This is a reasonable model in the real-world because as fans watch the game, they typically will have access the game stats in the early game, and they could then use this model to help them understand the likelihood their team wins.
 
 
 ---
