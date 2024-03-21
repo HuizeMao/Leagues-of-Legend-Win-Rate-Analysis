@@ -165,7 +165,7 @@ Using the Total Variation Distance (TVD) as our test statistic, we found an obse
 
 Given the p-value of 0.432, we conclude that the missingness of `csdiffat10` is not dependent on the game's result. This finding suggests that whether the team wins or loses does not influence the collection or reporting of the creep score difference at the 10-minute mark. The use of TVD as a test statistic provided a nuanced measure of the discrepancy in distributions between our groups of interest, supporting a robust analysis of missingness dependency.
 
-### Section (missingness) Conclusion
+### Section ("Missingness") Conclusion
 This analysis supports that the presence of detailed match data about "the creep score difference at the 10-minute mark" (`csdiffat10`), is dependent on the league that the match takes place, and is not dependent on the game result on that match.
 
 ---
@@ -274,7 +274,7 @@ The RandomForestClassifier's strength lies in its ability to handle the dataset'
 For the final model, we've introduced and engineered several features aiming to capture the complexities of early-game dynamics:
 
 ### New Features Added in the Model
-- **KDA at 10 Minutes (`kdaat10`):** We calculated a new feature representing the Kill-Death-Assist ratio at the 10-minute mark, which provides a comprehensive view of a player's early performance. This ratio is crucial as early game advantages often translate to higher chances of winning. The formula adjusts for zero deaths to avoid division by zero errors.
+- **KDA at 10 Minutes (`kdaat10`):** We calculated a new feature representing the Kill-Death ratio at the 10-minute mark, which provides a comprehensive view of a player's early performance. This ratio is crucial as early game advantages often translate to higher chances of winning. The formula adjusts for zero deaths to avoid division by zero errors.
 - **Polynomial Features:** We applied polynomial transformations to `csdiffat10` (Creep Score Difference at 10 Minutes) and `xpdiffat10` (Experience Point Difference at 10 Minutes). This allows our model to consider not only the linear impact of these differences but also their higher-order interactions, capturing the non-linear ways they might affect match outcomes.
 - **Date Extraction (`year_month`):** Recognizing the evolving nature of game strategies and patches over time, we extracted the year and month from the match date. This temporal information helps our model understand performance in the context of specific game versions, which is vital as early-game strategies effectiveness can change significantly with each game update.
 
