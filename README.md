@@ -227,7 +227,7 @@ The features we are using to predict the game outcome include:
 - `killsat10`: The number of kills achieved by the team by the 10-minute mark.
 - `deathsat10`: The number of times team members were killed by the 10-minute mark.
 - `xpdiffat10`: The difference in experience points between the team and their opponents at 10 minutes.
-- `data`: The time in which the match took place.
+- `date`: The time in which the match took place.
 
 ### **Evaluation Metric**
 
@@ -263,7 +263,7 @@ The performance of our RandomForest model was rigorously evaluated using the F1-
 
 ### Assessment of Model Quality
 
-Given the F1-score of 0.6841, we consider our model to be okay for initial predictions but see room for improvement. The model's balance between precision and recall, as reflected in the F1-score, suggests it can reasonably predict match outcomes. However, enhancing model accuracy and the F1-score could yield more reliable predictions. 
+Given the F1-score of 0.6831, we consider our model to be okay for initial predictions but see room for improvement. The model's balance between precision and recall, as reflected in the F1-score, suggests it can reasonably predict match outcomes. However, enhancing model accuracy and the F1-score could yield more reliable predictions. 
 
 The RandomForestClassifier's strength lies in its ability to handle the dataset's complexities, including the nominal boolean feature `firstblood` and the quantitative `csdiffat10`. However, improvements might be attained through feature engineering, hyperparameter tuning, or exploring alternative models.
 
